@@ -5,3 +5,4 @@
 - Include testing notes in every pull request.
 - Ask for review in the team Microsoft Teams channel when a PR is ready.
 - Provide clear commit messages that explain *why* a change was made, not just *what* changed.
+- Run the linter on your code before pushing to ensure compliance with the course coding standard.
