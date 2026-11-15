@@ -156,7 +156,7 @@ Example:
 
 The region and season filter handlers were removed from `main.js` because filtering is now managed within `trips.js`. This keeps Trips-specific functionality together and avoids duplicate event listeners.
 
-## Swagger Documentation
+## Swagger Documentation (Latter Implementation)
 
 Document both Trips API endpoints in Swagger.
 
