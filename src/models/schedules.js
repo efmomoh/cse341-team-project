@@ -1,5 +1,5 @@
 import { schedules } from "./schemas/schedules.js";
-import {getTripById} from "src/models/trips.js"
+import { getTripById } from "./trips.js";
 
 const getSchedulesByTripId = async (tripId, monthNumber=0) => {
 

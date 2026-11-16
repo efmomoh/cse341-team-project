@@ -47,4 +47,15 @@ const getSchedulesForTripAndMonth = async(req,res) => {
    }
 }
 
-export {getSchedulesForTrip,getSchedulesForTripAndMonth}
+const scheduleHandler = async (req,res) => {
+
+   const monthNumber = req.query.month; 
+   if(monthNumber === undefined){
+      await getSchedulesForTrip(req, res);
+      return;
+   }
+   await getSchedulesForTripAndMonth(req,res);
+   return;
+
+}
+export {scheduleHandler}

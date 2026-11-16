@@ -4,9 +4,9 @@ async function init(){
 
 const mainContainer = document.querySelector(".route-schedules");
 const allScheduleContainer = document.querySelector(".schedules-grid");
-const monthContainer = document.querySelector(".months-grid");
+const monthContainer = document.querySelector("#months-grid");
 
-const tripId = mainContainer.dataset.tripId;
+const tripId = mainContainer.dataset.tripid;
 const route = `/api/trips/${tripId}/schedules`;
 
 // Get all schedule, upon page load
@@ -18,7 +18,7 @@ renderData(schedules,allScheduleContainer,true);
 
 monthContainer.addEventListener("click", async(event) => {
   const clickedElement = event.target;
-  const month = clickedElement.dataset.monthNum;
+  const month = clickedElement.dataset.monthnum;
   if(month){
     const schedules = await getSchedule(`${route}?month=${month}`)
     if(schedules && schedules.length != 0){

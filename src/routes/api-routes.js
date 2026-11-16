@@ -1,38 +1,7 @@
 
 import express from "express"
-const router = express.Router();
-import { getSchedulesForTrip, getSchedulesForTripAndMonth} from "../controllers/schedules.js";
-
-/**
- * @openapi
- * /api/trips/{id}/schedules:
- *   get:
- *     summary: Get schedules for a trip
- *     description: Retrieves all schedules associated with a specific trip.
- *     tags:
- *       - Schedules
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: The unique ID of the trip.
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Schedules retrieved successfully.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Schedule'
- *       400:
- *         description: Trip ID is missing or invalid.
- *       500:
- *         description: Internal server error.
- */
-router.get("/api/trips/{id}/schedules", getSchedulesForTrip);
+const scheduleApiRouter = express.Router();
+import { scheduleHandler} from "../controllers/schedules.js";
 
 /**
  * @openapi
@@ -71,4 +40,6 @@ router.get("/api/trips/{id}/schedules", getSchedulesForTrip);
  *       500:
  *         description: Internal server error.
  */
-router.get("/api/trips/{id}/schedules?month={month}",getSchedulesForTripAndMonth);
+scheduleApiRouter.get("/api/trips/:id/schedules",scheduleHandler);
+
+export {scheduleApiRouter}
