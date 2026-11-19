@@ -1,17 +1,27 @@
+//----------SERVER----------//
+// This file is the entry point for the server application. It sets up the Express app, connects to the database, and starts the server.
+
+//----------IMPORTS----------//
 import app from './app.js';
 import { connectToDb } from './src/db/connect.js';
 
+//----------CONFIG----------//
+// Get the environment variables for NODE_ENV and PORT, with default values if not set.
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
+
+// Set the port to the value from the environment variable or default to 3000.
 const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB before accepting requests.
 await connectToDb();
 
-// Start the live-reload WebSocket server in development mode.
+//----------WEBSOCKET SERVER (DEV ONLY)----------//
 if (NODE_ENV.includes('dev')) {
     const ws = await import('ws');
 
     try {
+
+        // Create a WebSocket server on a port one higher than the HTTP server port.
         const wsPort = parseInt(PORT) + 1;
         const wsServer = new ws.WebSocketServer({ port: wsPort });
 
@@ -27,6 +37,7 @@ if (NODE_ENV.includes('dev')) {
     }
 }
 
+//----------START SERVER----------//
 app.listen(PORT, () => {
     console.log(`Server is running on http://127.0.0.1:${PORT}`);
 });

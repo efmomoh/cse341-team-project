@@ -1,6 +1,10 @@
-//src/models/schemas/trains.js.
+//----------TRAIN SCHEMA----------//
+// This file defines the Mongoose schema for the train data model, which includes fields such as id, name, operator, imageUrl, imageAlt, type, maxSpeedKmh, capacity, powerSource, bestFor, and description. It also includes timestamps for createdAt and updatedAt.
+
+//----------IMPORTS----------//
 import mongoose from "mongoose";
 
+//----------SCHEMA DEFINITION----------//
 const trainSchema = new mongoose.Schema(
   {
     id: {
@@ -48,6 +52,7 @@ const trainSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      enum: ["Electric", "Diesel", "Diesel-Electric", "Hybrid", "Hydrogen", "Steam", "Other"],
     },
     bestFor: {
       type: String,
@@ -65,6 +70,8 @@ const trainSchema = new mongoose.Schema(
   }
 );
 
+//----------MODEL CREATION----------//
 const train = mongoose.model("Train", trainSchema);
 
+//----------EXPORTS----------//
 export default train;
