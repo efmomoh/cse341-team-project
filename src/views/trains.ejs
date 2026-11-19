@@ -8,11 +8,17 @@
 </section>
 
 <section class="trains-catalog">
+
+    <!-- The loading message will be displayed while the client-side JavaScript fetches the train data from the server. -->
     <div class="trains-state" id="trains-loading">Loading trains...</div>
+    
+    <!-- The error message will be dynamically populated by the client-side JavaScript. -->
     <div class="trains-state trains-error" id="trains-error" hidden></div>
 
+    <!-- The list of trains will be dynamically populated here by the client-side JavaScript. -->
     <div class="trains-grid" id="trains-list"></div>
 
+    <!-- The template for a single train card. This will be cloned and populated with data for each train. -->      
     <template id="train-card-template">
         <article class="train-card">
             <div class="train-image-wrap">

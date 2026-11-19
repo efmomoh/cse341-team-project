@@ -1,3 +1,6 @@
+<!-- README.md -->
+<!-- Initial documentation of the repository -->
+
 # Kizuna Rail (絆鉄道)
 
 A brownfield web development training project designed to build real-world software engineering expertise through reverse engineering, refactoring, and debugging existing codebases.

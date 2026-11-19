@@ -1,9 +1,12 @@
-import { bookingPage, processBookingRequest } from './book.js';
-import confirmationPage from './confirm.js';
+//----------TRIPS ROUTER (LEGACY)----------//
+// Keeps existing trip list and trip details routes active until Feature Set 1 migrates them to ejs-routes.js.
+
+//----------IMPORTS----------//
+import { Router } from 'express';
 import listTripsPage from './list.js';
 import tripDetailsPage from './details.js';
-import { Router } from 'express';
 
+//----------ROUTER----------//
 const router = Router();
 
 // List all trips
@@ -12,11 +15,5 @@ router.get('/', listTripsPage);
 // Trip details page
 router.get('/:tripId', tripDetailsPage);
 
-// Book ticket
-router.get('/booking/:scheduleId', bookingPage);
-router.post('/book', processBookingRequest);
-
-// Booking confirmation page
-router.get('/confirmation/:confirmationId', confirmationPage);
-
+//----------EXPORTS----------//
 export default router;

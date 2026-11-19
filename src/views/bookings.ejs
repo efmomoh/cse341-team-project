@@ -1,0 +1,66 @@
+<%- include('./partials/header') %>
+
+<section class="trains-hero">
+    <h1>Bookings Admin</h1>
+    <p>
+        Review all confirmed passenger bookings across the Kizuna Rail network.
+    </p>
+</section>
+
+<section class="trains-catalog">
+    <!-- Loading state shown while fetch('/api/bookings') is running -->
+    <div class="trains-state" id="bookings-loading">Loading bookings...</div>
+
+    <!-- Error state shown if the API request fails -->
+    <div class="trains-state trains-error" id="bookings-error" hidden></div>
+
+    <!-- Empty state shown when the bookings collection has 0 documents -->
+    <div class="trains-state" id="bookings-empty" hidden>No bookings found yet.</div>
+
+    <!-- Container dynamically populated by public/js/main.js -->
+    <div class="trains-grid" id="bookings-list" aria-live="polite"></div>
+
+    <!-- Reusable card template cloned once per booking -->
+    <template id="booking-card-template">
+        <article class="train-card">
+            <header class="train-card-header">
+                <h2 data-field="id"></h2>
+                <span class="train-operator" data-field="ticket-class"></span>
+            </header>
+
+            <dl class="train-specs">
+                <div class="spec-item">
+                    <dt>Trip</dt>
+                    <dd data-field="trip-id"></dd>
+                </div>
+                <div class="spec-item">
+                    <dt>Schedule</dt>
+                    <dd data-field="schedule-id"></dd>
+                </div>
+                <div class="spec-item">
+                    <dt>Travel Day</dt>
+                    <dd data-field="selected-day"></dd>
+                </div>
+                <div class="spec-item">
+                    <dt>Booked On</dt>
+                    <dd data-field="created-at"></dd>
+                </div>
+                <div class="spec-item">
+                    <dt>Passengers</dt>
+                    <dd data-field="passenger-count"></dd>
+                </div>
+            </dl>
+
+            <p class="train-best-for">
+                <strong>Passenger(s):</strong>
+                <span data-field="passenger-names"></span>
+            </p>
+
+            <p class="train-best-for">
+                <a data-field="confirmation-link" href="#">View Full Confirmation</a>
+            </p>
+        </article>
+    </template>
+</section>
+
+<%- include('./partials/footer') %>
