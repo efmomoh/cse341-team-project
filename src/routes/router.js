@@ -1,18 +1,13 @@
 //----------ROUTER----------//
-// This file defines the routes for the application, including the home page, about page, trains page, and rail trips. It also includes an API endpoint for trains and a test error page.
+// Mounts application EJS routes, JSON API routes, and remaining legacy routes.
 
 //----------IMPORTS----------//
-import railTripsRouter from './trips.js';
-import { 
-    trainsApi, 
-    trainsPage 
-} from './trains.js';
 import { Router } from 'express';
-import { 
-    homePage, 
-    aboutPage, 
-    testErrorPage 
-} from './index.js';
+import apiRoutes from './api-routes.js';
+import ejsRoutes from './ejs-routes.js';
+import railTripsRouter from './trips.js';
+import { trainsApi, trainsPage } from './trains.js';
+import { homePage, aboutPage, testErrorPage } from './index.js';
 
 //----------ROUTES----------//
 const router = Router();
@@ -23,13 +18,15 @@ router.get('/', homePage);
 // About page
 router.get('/about', aboutPage);
 
-// Trains page
+// Trains page & API
 router.get('/trains', trainsPage);
-
-// Trains API
 router.get('/api/trains', trainsApi);
 
-// Rail trips
+// Refactored API routes (including Swagger at /api-docs) & EJS routes
+router.use('/', apiRoutes);
+router.use('/', ejsRoutes);
+
+// Remaining legacy rail trip routes
 router.use('/trips', railTripsRouter);
 
 // Test 500 error page

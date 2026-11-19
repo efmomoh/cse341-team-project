@@ -123,6 +123,101 @@ const hookTrainsCatalog = async () => {
     }
 };
 
+//----------FETCHING BOOKINGS DATA----------//
+// Fetches all bookings from /api/bookings and hydrates the Bookings Admin page.
+const hookBookingsAdmin = async () => {
+    const listEl = document.getElementById('bookings-list');
+    const templateEl = document.getElementById('booking-card-template');
+    const loadingEl = document.getElementById('bookings-loading');
+    const errorEl = document.getElementById('bookings-error');
+    const emptyEl = document.getElementById('bookings-empty');
+
+    // Guard clause: only run on the Bookings Admin page
+    if (!listEl || !templateEl) {
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/bookings');
+
+        if (!response.ok) {
+            throw new Error(`Failed to load bookings (${response.status})`);
+        }
+
+        const payload = await response.json();
+        const bookings = payload.bookings || [];
+
+        if (loadingEl) {
+            loadingEl.hidden = true;
+        }
+        if (errorEl) {
+            errorEl.hidden = true;
+        }
+
+        if (bookings.length === 0) {
+            listEl.replaceChildren();
+            if (emptyEl) {
+                emptyEl.hidden = false;
+            }
+            return;
+        }
+
+        if (emptyEl) {
+            emptyEl.hidden = true;
+        }
+
+        const fragment = document.createDocumentFragment();
+
+        bookings.forEach((booking) => {
+            const card = templateEl.content.cloneNode(true);
+            const passengers = Array.isArray(booking.passengers) ? booking.passengers : [];
+            const passengerNames = passengers
+                .map((p) => `${p.firstName || ''} ${p.lastName || ''}`.trim())
+                .filter(Boolean)
+                .join(', ');
+
+            const formattedDate = booking.createdAt
+                ? new Date(booking.createdAt).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                })
+                : 'N/A';
+
+            card.querySelector('[data-field="id"]').textContent = booking.id || 'N/A';
+            card.querySelector('[data-field="ticket-class"]').textContent = booking.ticketClass || 'N/A';
+            card.querySelector('[data-field="trip-id"]').textContent = booking.tripId || 'N/A';
+            card.querySelector('[data-field="schedule-id"]').textContent = booking.scheduleId
+                ? `#${booking.scheduleId}`
+                : 'N/A';
+            card.querySelector('[data-field="selected-day"]').textContent = booking.selectedDay || 'N/A';
+            card.querySelector('[data-field="created-at"]').textContent = formattedDate;
+            card.querySelector('[data-field="passenger-count"]').textContent = `${passengers.length}`;
+            card.querySelector('[data-field="passenger-names"]').textContent = passengerNames || 'None listed';
+
+            const linkEl = card.querySelector('[data-field="confirmation-link"]');
+            if (linkEl && booking.id) {
+                linkEl.href = `/trips/confirmation/${encodeURIComponent(booking.id)}`;
+            }
+
+            fragment.appendChild(card);
+        });
+
+        listEl.replaceChildren(fragment);
+    } catch (error) {
+        if (loadingEl) {
+            loadingEl.hidden = true;
+        }
+        if (emptyEl) {
+            emptyEl.hidden = true;
+        }
+        if (errorEl) {
+            errorEl.hidden = false;
+            errorEl.textContent = 'Unable to load bookings right now. Please try again in a moment.';
+        }
+    }
+};
+
 //----------INITIALIZATION----------//
 document.addEventListener('DOMContentLoaded', () => {
     // Hook the region sorter to handle changes in the region filter
@@ -133,4 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch and display the train catalog when the page loads
     hookTrainsCatalog();
+
+    // Fetch and display bookings on the Bookings Admin page
+    hookBookingsAdmin();
 });
