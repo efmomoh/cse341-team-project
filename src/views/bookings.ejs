@@ -13,16 +13,15 @@
     <div class="bookings-state bookings-error" id="bookings-error" hidden></div>
 
     <div class="bookings-grid" id="bookings-list"></div>
-
     <template id="booking-card-template">
         <article class="booking-card">
-            <header class="booking-card-header">
+            <div class="booking-card-header">
                 <div>
                     <span class="booking-label">Booking Reference</span>
                     <h2 class="booking-id" data-field="id"></h2>
                 </div>
                 <span class="booking-date" data-field="createdAt"></span>
-            </header>
+            </div>
 
             <dl class="booking-specs">
                 <div class="spec-item">
@@ -48,11 +47,12 @@
                 <ul class="booking-passenger-list" data-field="passengers"></ul>
             </div>
 
-            <footer class="booking-card-footer">
-                <a class="btn btn-secondary" data-field="confirmationLink">View Confirmation</a>
-            </footer>
+            <div class="booking-card-footer">
+                <a class="booking-confirm-link" data-field="confirmationLink">View Confirmation</a>
+            </div>
         </article>
     </template>
+    
 </section>
 
 <%- include('./partials/footer') %>
