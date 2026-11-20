@@ -20,7 +20,7 @@ router.get('/trains', trainsPage);
 router.get('/api/trains', trainsApi);
 
 // Trips API
-router.use('/api', apiRoutes);
+router.use('/', apiRoutes);
 
 // EJS routes
 router.use('/', ejsRoutes);

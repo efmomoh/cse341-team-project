@@ -20,7 +20,7 @@ const router = express.Router();
  *       500:
  *         description: Failed to fetch trips
  */
-router.get('/trips', getAllTrips);
+router.get('/api/trips', getAllTrips);
 
 /**
  * @swagger
@@ -43,6 +43,6 @@ router.get('/trips', getAllTrips);
  *       500:
  *         description: Failed to fetch trip
  */
-router.get('/trips/:id', getTripById);
+router.get('/api/trips/:id', getTripById);
 
 export default router;
