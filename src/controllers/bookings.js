@@ -4,7 +4,7 @@ import { generateConfirmationCode } from '../includes/helpers.js';
 import {
   createBooking,
   getAllBookings as findAllBookings,
-  getBookingById,
+  getBookingById as findBookingById,
 } from '../models/bookings.js';
 
 // EJS Controller: Render the booking form for a specific schedule
@@ -68,7 +68,7 @@ const confirmationPage = async (req, res, next) => {
   try {
     const { confirmationId } = req.params;
 
-    const confirmation = await getBookingById(confirmationId);
+    const confirmation = await findBookingById(confirmationId);
     if (!confirmation) {
       const err = new Error('Booking confirmation not found');
       err.status = 404;
@@ -101,10 +101,24 @@ const getAllBookings = async (req, res) => {
   }
 };
 
+
+// API Controller: Return a single booking by ID as JSON
+const getBookingById = async (req, res) => {
+  try {
+    const booking = await findBookingById(req.params.id);
+    if (!booking) {
+      return res.status(404).json({ error: 'Booking not found' });
+    }
+    return res.status(200).json(booking);
+  } catch {
+    return res.status(500).json({ error: 'Failed to fetch booking' });
+  }
+};
 export {
   bookingPage,
   bookingsAdminPage,
   confirmationPage,
   getAllBookings,
+  getBookingById,
   processBookingRequest,
 };

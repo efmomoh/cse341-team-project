@@ -1,6 +1,6 @@
 // src/routes/api-routes.js
 import { Router } from 'express';
-import { getAllBookings } from '../controllers/bookings.js';
+import { getAllBookings, getBookingById } from '../controllers/bookings.js';
 
 const router = Router();
 
@@ -76,4 +76,75 @@ const router = Router();
  */
 router.get('/bookings', getAllBookings);
 
+/**
+ * @swagger
+ * /api/bookings/{id}:
+ *   get:
+ *     summary: Retrieve a single booking by its confirmation ID
+ *     tags:
+ *       - Bookings
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The unique booking confirmation ID (e.g., JR00013X35)
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Booking found and returned as JSON
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 scheduleId:
+ *                   type: number
+ *                 tripId:
+ *                   type: string
+ *                 ticketClass:
+ *                   type: string
+ *                 selectedDay:
+ *                   type: string
+ *                 passengers:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       firstName:
+ *                         type: string
+ *                       lastName:
+ *                         type: string
+ *                       email:
+ *                         type: string
+ *                       phone:
+ *                         type: string
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ *       404:
+ *         description: Booking not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *       500:
+ *         description: Server error while fetching the booking
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ */
+router.get('/bookings/:id', getBookingById);
 export default router;
