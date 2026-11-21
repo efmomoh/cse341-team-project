@@ -1,3 +1,5 @@
+import apiRoutes from './api-routes.js';
+import ejsRoutes from './ejs-routes.js';
 import railTripsRouter from './trips.js';
 import { trainsApi, trainsPage } from './trains.js';
 import { Router } from 'express';
@@ -16,6 +18,12 @@ router.get('/trains', trainsPage);
 
 // Trains API
 router.get('/api/trains', trainsApi);
+
+// API routes (/api/bookings, etc.)
+router.use('/api', apiRoutes);
+
+// EJS booking and admin routes
+router.use('/', ejsRoutes);
 
 // Rail trips
 router.use('/trips', railTripsRouter);
