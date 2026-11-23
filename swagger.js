@@ -5,9 +5,9 @@ const options = {
     definition: {
         openapi:'3.0.0', 
         info: {
-        title: 'Booking API',
+        title: 'Kizuna Rail',
         version: '1.0.0',
-        description: 'Booking Api'
+        description: 'Kizuna Rail'
        },
        servers: [
         {

@@ -75,5 +75,25 @@
             </div>
         </div>
 </article>
+<template class="schedule-template">
+    <div class="schedule-card">
+       <div class="schedule-times">
+          <div class="time-block">
+             <span class="time-label">Departs</span>
+             <span class="time-value departureTime"></span>
+          </div>
+          <span class="time-arrow">→</span>
+          <div class="time-block">
+            <span class="time-label">Arrives</span>
+            <span class="time-value arrivalTime"></span>
+          </div>
+       </div>
+       <div class="schedule-days"></div>
+      <a href="" class="book-btn">Book Now</a>
+    </div>
+</template>
+<template class="schedule-days-template">
+  <span class="day-badge"></span>
+</template>
   <script src="/js/details.js" defer></script>
 <%- include('../partials/footer') %>t

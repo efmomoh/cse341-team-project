@@ -5,10 +5,10 @@ import { scheduleHandler} from "../controllers/schedules.js";
 
 /**
  * @openapi
- * /api/trips/{id}/schedules?month={month}:
+ * /api/trips/{id}/schedules:
  *   get:
  *     summary: Get schedules for a trip by month
- *     description: Retrieves schedules associated with a specific trip if the trip operates during the requested month.
+ *     description: Retrieves schedules associated with a specific trip, optionally filtered by month.
  *     tags:
  *       - Schedules
  *     parameters:
@@ -20,7 +20,7 @@ import { scheduleHandler} from "../controllers/schedules.js";
  *           type: string
  *       - in: query
  *         name: month
- *         required: true
+ *         required: false
  *         description: The month number (1–12).
  *         schema:
  *           type: integer
@@ -40,6 +40,7 @@ import { scheduleHandler} from "../controllers/schedules.js";
  *       500:
  *         description: Internal server error.
  */
-scheduleApiRouter.get("/api/trips/:id/schedules",scheduleHandler);
+scheduleApiRouter.get("/api/trips/:id/schedules", scheduleHandler);
+
 
 export {scheduleApiRouter}

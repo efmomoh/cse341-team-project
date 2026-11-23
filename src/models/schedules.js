@@ -7,9 +7,14 @@ const getSchedulesByTripId = async (tripId, monthNumber=0) => {
      
     const tripDetails = await getTripById(tripId);
 
+    if(!Array.isArray(tripDetails.operatingMonths)){
+       return []
+    }
+
     if(!tripDetails || !tripDetails.operatingMonths.includes(monthNumber)){
         return []
     }
+    
     return await schedules.find({tripId}).lean()
 }
 

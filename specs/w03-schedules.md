@@ -2,7 +2,7 @@
 
 ## Feature: getSchedulesByTripId feature
 
-### Goal: Update the trip details page (src/view/trips/details.ejs) so the schedules component is powered by the API and updates when the user selects a month. When the user selects a month, the client-side JavaScript should fetch the relevant schedule data from the API and update the displayed schedules accordingly.Update the existing trip details EJS controller function. It should no longer need to get the schedules, because those will be populated later on the client side.
+### Goal: Update the trip details page (src/view/trips/details.ejs) so the schedules component is powered by the API and updates when the user selects a month. When the user selects a month, the client-side JavaScript should fetch the relevant schedule data from the API and update the displayed schedules accordingly.Update the existing trip details EJS controller function. It should no longer need to get the schedules, because those will be populated later on the client side.cl
 
 
 ### Data Model 

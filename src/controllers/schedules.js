@@ -23,8 +23,12 @@ const getSchedulesForTripAndMonth = async(req,res) => {
 
    try {
       const tripId = req.params.id;
-      const monthNumber = req.query.month
+      const monthNumber = req.query.month;
 
+      if(typeof(monthNumber !== String)){
+          return res.status(400).json({"message": "Invalid data format"})
+      }
+     
       if(!tripId || monthNumber.trim() === "" || monthNumber === undefined){
          return res.status(400).json({"message": "Invalid data format"})
       }

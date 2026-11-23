@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Booking API",
+    "title": "Kizuna Rail",
     "version": "1.0.0",
-    "description": "Booking Api"
+    "description": "Kizuna Rail"
   },
   "servers": [
     {
@@ -14,49 +14,8 @@
   "paths": {
     "/api/trips/{id}/schedules": {
       "get": {
-        "summary": "Get schedules for a trip",
-        "description": "Retrieves all schedules associated with a specific trip.",
-        "tags": [
-          "Schedules"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "description": "The unique ID of the trip.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Schedules retrieved successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Schedule"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Trip ID is missing or invalid."
-          },
-          "500": {
-            "description": "Internal server error."
-          }
-        }
-      }
-    },
-    "/api/trips/{id}/schedules?month={month}": {
-      "get": {
         "summary": "Get schedules for a trip by month",
-        "description": "Retrieves schedules associated with a specific trip if the trip operates during the requested month.",
+        "description": "Retrieves schedules associated with a specific trip, optionally filtered by month.",
         "tags": [
           "Schedules"
         ],
@@ -73,7 +32,7 @@
           {
             "in": "query",
             "name": "month",
-            "required": true,
+            "required": false,
             "description": "The month number (1–12).",
             "schema": {
               "type": "integer",
