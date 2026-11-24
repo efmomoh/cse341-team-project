@@ -1,7 +1,8 @@
 
 import express from "express"
-const scheduleApiRouter = express.Router();
 import { scheduleHandler} from "../controllers/schedules.js";
+import { getAllTrips,getTripById} from '../controllers/trips.js';
+const router = express.Router();
 
 /**
  * @openapi
@@ -11,6 +12,51 @@ import { scheduleHandler} from "../controllers/schedules.js";
  *     description: Retrieves schedules associated with a specific trip, optionally filtered by month.
  *     tags:
  *       - Schedules
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Unique trip identifier
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: month
+ *         required: false
+ *         description: Month number (1–12)
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 12
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved schedules
+ *       404:
+ *         description: Trip not found
+ *       500:
+ *         description: Failed to fetch schedules
+ */
+router.get("/api/trips/:id/schedules", scheduleHandler);
+
+/**
+ * @swagger
+ * /api/trips:
+ *   get:
+ *     summary: Get all railway trips
+ *     tags: [Trips]
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved all trips
+ *       500:
+ *         description: Failed to fetch trips
+ */
+router.get('/api/trips', getAllTrips);
+
+/**
+ * @swagger
+ * /api/trips/{id}:
+ *   get:
+ *     summary: Get a railway trip by ID
+ *     tags: [Trips]
  *     parameters:
  *       - in: path
  *         name: id
@@ -40,7 +86,6 @@ import { scheduleHandler} from "../controllers/schedules.js";
  *       500:
  *         description: Internal server error.
  */
-scheduleApiRouter.get("/api/trips/:id/schedules", scheduleHandler);
+router.get('/api/trips/:id', getTripById);
 
-
-export {scheduleApiRouter}
+export default router;

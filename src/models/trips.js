@@ -1,12 +1,10 @@
-import { getDb } from "../db/connect.js";
 
+import Trip from './schemas/trips.js';
 
-const getTripById = async(tripId) => {
-    const db = getDb();
-
-    const trip = await db.collection("trips").findOne({id: tripId});
-
-    return trip;
+export async function getTripById(id) {
+    return Trip.findOne({ id }).lean();
 }
 
-export {getTripById}
+export async function getAllTrips() {
+    return Trip.find({}).sort({ name: 1 }).lean();
+}
