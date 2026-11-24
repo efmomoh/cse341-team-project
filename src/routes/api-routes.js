@@ -32,6 +32,8 @@ const router = express.Router();
  *         description: Successfully retrieved schedules
  *       404:
  *         description: Trip not found
+ *       400: 
+ *         description: Invalid data format
  *       500:
  *         description: Failed to fetch schedules
  */
@@ -51,6 +53,7 @@ router.get("/api/trips/:id/schedules", scheduleHandler);
  */
 router.get('/api/trips', getAllTrips);
 
+
 /**
  * @swagger
  * /api/trips/{id}:
@@ -64,28 +67,22 @@ router.get('/api/trips', getAllTrips);
  *         description: The unique ID of the trip.
  *         schema:
  *           type: string
- *       - in: query
- *         name: month
- *         required: false
- *         description: The month number (1–12).
- *         schema:
- *           type: integer
- *           minimum: 1
- *           maximum: 12
  *     responses:
  *       200:
- *         description: Schedules retrieved successfully.
+ *         description: Trip retrieved successfully.
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Schedule'
+ *               $ref: '#/components/schemas/Trip'
  *       400:
- *         description: Invalid trip ID or month parameter.
+ *         description: Invalid trip ID format.
+ *       404:
+ *         description: Trip not found.
  *       500:
  *         description: Internal server error.
  */
 router.get('/api/trips/:id', getTripById);
+
+
 
 export default router;
