@@ -1,0 +1,266 @@
+/* Provides unique styling for authentication, account,and admin pages using your existing root color variables. */
+@import 'colors.css';
+
+.auth-page,
+.account-page,
+.admin-page {
+    min-height: 75vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 1.5rem;
+    background: var(--clr-background);
+}
+
+.auth-card,
+.account-card,
+.admin-card {
+    width: 100%;
+    max-width: 480px;
+    padding: 2.5rem;
+    background: var(--clr-surface);
+    border: 1px solid var(--clr-border-light);
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(45, 62, 58, 0.08);
+}
+
+.account-card,
+.admin-card {
+    max-width: 650px;
+}
+
+/* =========================================
+   HEADINGS
+========================================= */
+
+.auth-heading,
+.account-heading,
+.admin-heading {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.auth-heading h1,
+.account-heading h1,
+.admin-heading h1 {
+    color: var(--clr-text-primary);
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.auth-heading p,
+.account-heading p,
+.admin-heading p {
+    color: var(--clr-text-secondary);
+    line-height: 1.7;
+}
+
+/* =========================================
+   FORMS
+========================================= */
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.35rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    color: var(--clr-text-primary);
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--clr-border);
+    border-radius: 9px;
+    background: var(--clr-surface-alt);
+    color: var(--clr-text-primary);
+    font: inherit;
+    transition: border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--clr-primary);
+    box-shadow: 0 0 0 3px var(--clr-primary-secondary);
+}
+
+.form-group small {
+    color: var(--clr-text-muted);
+    font-size: 0.82rem;
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.auth-button,
+.logout-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0.95rem 1.2rem;
+    border: none;
+    border-radius: 9px;
+    font: inherit;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.auth-button {
+    background: var(--clr-primary);
+    color: white;
+}
+
+.auth-button:hover {
+    background: var(--clr-text-secondary);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.logout-button {
+    margin-top: 1rem;
+    background: var(--clr-surface-alt);
+    color: var(--clr-text-primary);
+    border: 1px solid var(--clr-border);
+}
+
+.logout-button:hover {
+    background: var(--clr-primary-pale);
+}
+
+/* =========================================
+   ERROR AND SUCCESS MESSAGES
+========================================= */
+
+.auth-error,
+.auth-success {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 9px;
+    line-height: 1.5;
+}
+
+.auth-error {
+    color: #8b3030;
+    background: #fbeaea;
+    border: 1px solid #eac5c5;
+}
+
+.auth-success {
+    color: var(--clr-summer-text);
+    background: var(--clr-summer);
+    border: 1px solid var(--clr-primary-light);
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.auth-footer {
+    margin-top: 1.8rem;
+    text-align: center;
+    color: var(--clr-text-secondary);
+}
+
+.auth-footer a {
+    color: var(--clr-link-md);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-footer a:hover {
+    color: var(--clr-link-md-hover);
+    text-decoration: underline;
+}
+
+/* =========================================
+   ACCOUNT DETAILS
+========================================= */
+
+.account-card h2 {
+    color: var(--clr-text-primary);
+    margin-bottom: 1.25rem;
+}
+
+.account-details {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.account-details div {
+    padding: 1rem;
+    background: var(--clr-surface-alt);
+    border-radius: 9px;
+}
+
+.account-details dt {
+    color: var(--clr-text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 0.35rem;
+}
+
+.account-details dd {
+    color: var(--clr-text-primary);
+    font-weight: 600;
+}
+
+/* =========================================
+   ADMIN DASHBOARD
+========================================= */
+
+.admin-welcome {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    background: var(--clr-primary-pale-secondary);
+    color: var(--clr-text-primary);
+}
+
+.admin-welcome h2 {
+    margin-bottom: 0.75rem;
+}
+
+.admin-welcome p {
+    margin-bottom: 0.5rem;
+    color: var(--clr-text-secondary);
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 600px) {
+
+    .auth-page,
+    .account-page,
+    .admin-page {
+        padding: 1.5rem 1rem;
+    }
+
+    .auth-card,
+    .account-card,
+    .admin-card {
+        padding: 1.5rem;
+    }
+
+    .auth-heading h1,
+    .account-heading h1,
+    .admin-heading h1 {
+        font-size: 1.65rem;
+    }
+}
