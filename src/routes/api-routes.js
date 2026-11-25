@@ -1,8 +1,45 @@
-// src/routes/api-routes.js
 import { Router } from 'express';
 import { getAllBookings, getBookingById } from '../controllers/bookings.js';
+import { getAllTrips, getTripById } from '../controllers/trips.js';
 
 const router = Router();
+
+/**
+ * @swagger
+ * /api/trips:
+ *   get:
+ *     summary: Get all railway trips
+ *     tags: [Trips]
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved all trips
+ *       500:
+ *         description: Failed to fetch trips
+ */
+router.get('/api/trips', getAllTrips);
+
+/**
+ * @swagger
+ * /api/trips/{id}:
+ *   get:
+ *     summary: Get a railway trip by ID
+ *     tags: [Trips]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Unique trip identifier
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved trip
+ *       404:
+ *         description: Trip not found
+ *       500:
+ *         description: Failed to fetch trip
+ */
+router.get('/api/trips/:id', getTripById);
 
 /**
  * @swagger
@@ -74,7 +111,7 @@ const router = Router();
  *                   type: string
  *                   example: Failed to fetch bookings
  */
-router.get('/bookings', getAllBookings);
+router.get('/api/bookings', getAllBookings);
 
 /**
  * @swagger
@@ -146,5 +183,6 @@ router.get('/bookings', getAllBookings);
  *                 error:
  *                   type: string
  */
-router.get('/bookings/:id', getBookingById);
+router.get('/api/bookings/:id', getBookingById);
+
 export default router;

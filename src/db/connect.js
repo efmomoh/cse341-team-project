@@ -5,8 +5,13 @@ const connectToDb = async (options = {}) => {
     return mongoose.connection.db;
   }
 
-  const connectionString = options.connectionString || process.env.MONGODB_URI;
-  const databaseName = options.databaseName || process.env.MONGODB_DB_NAME || 'practice';
+  const connectionString =
+    options.connectionString || process.env.MONGODB_URI;
+
+  const databaseName =
+    options.databaseName ||
+    process.env.MONGODB_DB_NAME ||
+    'practice';
 
   if (!connectionString) {
     throw new Error('MONGODB_URI is required.');
@@ -16,6 +21,8 @@ const connectToDb = async (options = {}) => {
     dbName: databaseName,
   });
 
+  console.log('Connected to MongoDB Atlas.');
+
   return mongoose.connection.db;
 };
 
@@ -23,6 +30,7 @@ const getDb = () => {
   if (mongoose.connection.readyState !== 1 || !mongoose.connection.db) {
     throw new Error('Database not initialized. Call connectToDb first.');
   }
+
   return mongoose.connection.db;
 };
 
