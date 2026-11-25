@@ -5,6 +5,16 @@ import {
     getAllTrips,
     getTripById
 } from '../controllers/trips.js';
+import {
+    register,
+    login,
+    logout
+} from '../controllers/auth.js';
+
+import {
+    requireApiLogin,
+    requireApiRole
+} from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -44,5 +54,23 @@ router.get('/api/trips', getAllTrips);
  *         description: Failed to fetch trip
  */
 router.get('/api/trips/:id', getTripById);
+
+// Register account
+router.post('/api/auth/register', register);
+
+// Login
+router.post('/api/auth/login', login);
+
+// Logout
+router.post('/api/auth/logout', requireApiLogin, logout);
+
+// Example protected admin API endpoint
+router.get('/api/auth/admin', requireApiRole('admin'), (req, res) => {
+    return res.status(200).json({
+        message: 'Administrator access granted.',
+        user: req.user
+    });
+}
+);
 
 export default router;
