@@ -1,0 +1,18 @@
+<!--Create a generic client error page-->
+<%- include('../partials/header') %>
+
+    <main class="error-page">
+        <section>
+            <h1>
+                <%= status %> - <%= title %>
+            </h1>
+
+            <p>
+                <%= error %>
+            </p>
+
+            <a href="/">Return to homepage</a>
+        </section>
+    </main>
+
+    <%- include('../partials/footer') %>

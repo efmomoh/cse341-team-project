@@ -1,19 +1,22 @@
 <%- include('../partials/header') %>
-<h1>Something Went Wrong</h1>
-<p>
-    We are experiencing technical difficulties. Our team has been notified and is working to fix the issue.
-</p>
-<p>
-    <a href="/">Return to homepage</a>.
-</p>
+    <h1>
+        <%= title || 'Something Went Wrong' %>
+    </h1>
 
-<% if (NODE_ENV === 'development') { %>
-<details open>
-    <summary>Error Details:</summary>
-    <pre><%= error %></pre>
-    <br>
-    <pre><%= stack %></pre>
-</details>
-<% } %>
+    <p>
+        <%= error
+            || 'We are experiencing technical difficulties. Our team has been notified and is working to fix the issue.'
+            %>
+    </p>
 
-<%- include('../partials/footer') %>
+    <p> <a href="/">Return to homepage</a>. </p>
+
+    <% if (NODE_ENV==='development' ) { %>
+        <details open>
+            <summary>Error Details:</summary>
+            <pre><%= error %></pre>
+            <br>
+            <pre><%= stack %></pre>
+        </details>
+        <% } %>
+            <%- include('../partials/footer') %>
