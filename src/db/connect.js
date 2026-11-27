@@ -1,8 +1,15 @@
 
 import mongoose from 'mongoose';
 
+let connectingPromise = null;
+
 const connectToDb = async (options = {}) => {
   if (mongoose.connection.readyState === 1) {
+    return mongoose.connection.db;
+  }
+
+  if (connectingPromise) {
+    await connectingPromise;
     return mongoose.connection.db;
   }
 
@@ -18,13 +25,17 @@ const connectToDb = async (options = {}) => {
     throw new Error('MONGODB_URI is required.');
   }
 
-  await mongoose.connect(connectionString, {
+  connectingPromise = mongoose.connect(connectionString, {
     dbName: databaseName
   });
 
-  console.log('Connected to MongoDB Atlas.');
-
-  return mongoose.connection.db;
+  try {
+    await connectingPromise;
+    console.log('Connected to MongoDB Atlas.');
+    return mongoose.connection.db;
+  } finally {
+    connectingPromise = null;
+  }
 };
 
 const getDb = () => {
