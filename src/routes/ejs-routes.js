@@ -1,17 +1,27 @@
-
-import { Router } from "express";
-
+import { Router } from 'express';
 import {
-    renderTripsListPage,
-    renderTripDetailsPage
-} from "../controllers/trips.js";
+  bookingPage,
+  bookingsAdminPage,
+  confirmationPage,
+  processBookingRequest,
+} from '../controllers/bookings.js';
+import {
+  renderTripsListPage,
+  renderTripDetailsPage,
+} from '../controllers/trips.js';
 
 const router = Router();
 
-// Trips listing page.
-router.get("/trips", renderTripsListPage);
+// Booking workflow pages
+router.get('/trips/booking/:scheduleId', bookingPage);
+router.post('/trips/book', processBookingRequest);
+router.get('/trips/confirmation/:confirmationId', confirmationPage);
 
-// Trip details page.
-router.get("/trips/:id", renderTripDetailsPage);
+// Bookings Admin page (hydrated client-side via /api/bookings)
+router.get('/bookings-admin', bookingsAdminPage);
+
+// Trips listing and details pages
+router.get('/trips', renderTripsListPage);
+router.get('/trips/:id', renderTripDetailsPage);
 
 export default router;

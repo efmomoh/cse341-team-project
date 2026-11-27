@@ -1,4 +1,3 @@
-
 import mongoose from 'mongoose';
 
 let connectingPromise = null;
@@ -39,7 +38,7 @@ const connectToDb = async (options = {}) => {
 };
 
 const getDb = () => {
-  if (mongoose.connection.readyState !== 1) {
+  if (mongoose.connection.readyState !== 1 || !mongoose.connection.db) {
     throw new Error('Database not initialized. Call connectToDb first.');
   }
 

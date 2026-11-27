@@ -1,5 +1,4 @@
-
-import { Router } from 'express'; 
+import { Router } from 'express';
 import ejsRoutes from './ejs-routes.js';
 import apiRoutes from './api-routes.js';
 import { trainsApi, trainsPage } from './trains.js';
@@ -19,10 +18,10 @@ router.get('/trains', trainsPage);
 // Trains API
 router.get('/api/trains', trainsApi);
 
-// Trips API
+// API routes (/api/trips, /api/bookings)
 router.use('/', apiRoutes);
 
-// EJS routes
+// EJS routes (/trips, /bookings-admin, booking workflow)
 router.use('/', ejsRoutes);
 
 // Test 500 error page

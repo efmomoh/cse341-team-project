@@ -1,0 +1,58 @@
+<%- include('./partials/header') %>
+
+<section class="bookings-hero">
+    <h1>Bookings Admin</h1>
+    <p>
+        View and review all customer scenic railway reservations in real time.
+    </p>
+</section>
+
+<section class="bookings-admin">
+    <div class="bookings-state" id="bookings-loading">Loading bookings...</div>
+    <div class="bookings-state" id="bookings-empty" hidden>No bookings have been created yet.</div>
+    <div class="bookings-state bookings-error" id="bookings-error" hidden></div>
+
+    <div class="bookings-grid" id="bookings-list"></div>
+    <template id="booking-card-template">
+        <article class="booking-card">
+            <div class="booking-card-header">
+                <div>
+                    <span class="booking-label">Booking Reference</span>
+                    <h2 class="booking-id" data-field="id"></h2>
+                </div>
+                <span class="booking-date" data-field="createdAt"></span>
+            </div>
+
+            <dl class="booking-specs">
+                <div class="spec-item">
+                    <dt>Trip</dt>
+                    <dd data-field="tripId"></dd>
+                </div>
+                <div class="spec-item">
+                    <dt>Schedule ID</dt>
+                    <dd data-field="scheduleId"></dd>
+                </div>
+                <div class="spec-item">
+                    <dt>Ticket Class</dt>
+                    <dd data-field="ticketClass"></dd>
+                </div>
+                <div class="spec-item">
+                    <dt>Travel Day</dt>
+                    <dd data-field="selectedDay"></dd>
+                </div>
+            </dl>
+
+            <div class="booking-passengers">
+                <h3>Passengers (<span data-field="passengerCount"></span>)</h3>
+                <ul class="booking-passenger-list" data-field="passengers"></ul>
+            </div>
+
+            <div class="booking-card-footer">
+                <a class="booking-confirm-link" data-field="confirmationLink">View Confirmation</a>
+            </div>
+        </article>
+    </template>
+    
+</section>
+
+<%- include('./partials/footer') %>
