@@ -5,6 +5,7 @@ import pkg from './package.json' with { type: 'json' };
 import globalMiddleware from './src/middleware/global.js';
 import routes from './src/routes/router.js';
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = Path.dirname(__filename);
 
@@ -27,6 +28,8 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 app.use(globalMiddleware);
 app.use('/', routes);
+
+
 
 // Catch requests that did not match a route.
 app.use((req, res, next) => {

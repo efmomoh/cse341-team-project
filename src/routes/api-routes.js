@@ -1,8 +1,44 @@
 import { Router } from 'express';
 import { getAllBookings, getBookingById } from '../controllers/bookings.js';
+import { scheduleHandler } from '../controllers/schedules.js';
 import { getAllTrips, getTripById } from '../controllers/trips.js';
 
 const router = Router();
+
+/**
+ * @openapi
+ * /api/trips/{id}/schedules:
+ *   get:
+ *     summary: Get schedules for a trip by month
+ *     description: Retrieves schedules associated with a specific trip, optionally filtered by month.
+ *     tags:
+ *       - Schedules
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Unique trip identifier
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: month
+ *         required: false
+ *         description: Month number (1-12)
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 12
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved schedules
+ *       404:
+ *         description: Trip not found
+ *       400:
+ *         description: Invalid data format
+ *       500:
+ *         description: Failed to fetch schedules
+ */
+router.get('/api/trips/:id/schedules', scheduleHandler);
 
 /**
  * @swagger
@@ -28,16 +64,22 @@ router.get('/api/trips', getAllTrips);
  *       - in: path
  *         name: id
  *         required: true
+ *         description: The unique ID of the trip.
  *         schema:
  *           type: string
- *         description: Unique trip identifier
  *     responses:
  *       200:
- *         description: Successfully retrieved trip
+ *         description: Trip retrieved successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Trip'
+ *       400:
+ *         description: Invalid trip ID format.
  *       404:
- *         description: Trip not found
+ *         description: Trip not found.
  *       500:
- *         description: Failed to fetch trip
+ *         description: Internal server error.
  */
 router.get('/api/trips/:id', getTripById);
 
