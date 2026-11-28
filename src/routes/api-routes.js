@@ -1,7 +1,16 @@
 import { Router } from 'express';
+import {
+    register,
+    login,
+    logout
+} from '../controllers/auth.js';
 import { getAllBookings, getBookingById } from '../controllers/bookings.js';
 import { scheduleHandler } from '../controllers/schedules.js';
 import { getAllTrips, getTripById } from '../controllers/trips.js';
+import {
+    requireApiLogin,
+    requireApiRole
+} from '../middleware/auth.js';
 
 const router = Router();
 
@@ -226,5 +235,18 @@ router.get('/api/bookings', getAllBookings);
  *                   type: string
  */
 router.get('/api/bookings/:id', getBookingById);
+
+// Authentication API routes
+router.post('/api/auth/register', register);
+router.post('/api/auth/login', login);
+router.post('/api/auth/logout', requireApiLogin, logout);
+
+// Example protected admin API endpoint
+router.get('/api/auth/admin', requireApiRole('admin'), (req, res) => {
+    return res.status(200).json({
+        message: 'Administrator access granted.',
+        user: req.user
+    });
+});
 
 export default router;
