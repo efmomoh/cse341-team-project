@@ -13,7 +13,8 @@ const __dirname = Path.dirname(__filename);
 const app = express();
 
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
-const SESSION_SECRET = process.env.SESSION_SECRET;
+const isTestEnv = NODE_ENV === 'test' || Boolean(process.env.VITEST);
+const SESSION_SECRET = process.env.SESSION_SECRET || (isTestEnv ? 'test-session-secret' : undefined);
 
 if (!SESSION_SECRET) {
     throw new Error('SESSION_SECRET is required. Add it to your .env file.');

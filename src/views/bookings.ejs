@@ -3,16 +3,72 @@
 <section class="bookings-hero">
     <h1>Bookings Admin</h1>
     <p>
-        View and review all customer scenic railway reservations in real time.
+        <% if (user && user.role === 'admin') { %>
+            Viewing all scenic railway bookings as an administrator.
+        <% } else { %>
+            Viewing and managing bookings associated with <strong><%= user?.email %></strong>.
+        <% } %>
     </p>
 </section>
 
 <section class="bookings-admin">
+    <div class="bookings-state bookings-feedback" id="bookings-feedback" hidden></div>
     <div class="bookings-state" id="bookings-loading">Loading bookings...</div>
-    <div class="bookings-state" id="bookings-empty" hidden>No bookings have been created yet.</div>
+    <div class="bookings-state" id="bookings-empty" hidden>No bookings available for your account.</div>
     <div class="bookings-state bookings-error" id="bookings-error" hidden></div>
 
+    <!-- Edit Booking Panel (populated dynamically without page reload) -->
+    <section class="booking-edit-panel" id="booking-edit-panel" hidden>
+        <div class="booking-edit-header">
+            <h2>Edit Booking <span id="edit-booking-id-label"></span></h2>
+            <button type="button" class="booking-btn booking-btn-secondary" id="edit-booking-cancel">Cancel</button>
+        </div>
+
+        <form id="booking-edit-form" class="booking-edit-form">
+            <input type="hidden" id="edit-booking-id" name="id">
+
+            <div class="booking-edit-fields">
+                <label class="booking-field">
+                    <span>Ticket Class</span>
+                    <input type="text" id="edit-ticket-class" name="ticketClass" required>
+                </label>
+
+                <label class="booking-field">
+                    <span>Travel Day</span>
+                    <select id="edit-selected-day" name="selectedDay" required>
+                        <option value="monday">Monday</option>
+                        <option value="tuesday">Tuesday</option>
+                        <option value="wednesday">Wednesday</option>
+                        <option value="thursday">Thursday</option>
+                        <option value="friday">Friday</option>
+                        <option value="saturday">Saturday</option>
+                        <option value="sunday">Sunday</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="booking-edit-passengers">
+                <div class="booking-edit-passengers-header">
+                    <h3>Passengers (1–8)</h3>
+                    <button type="button" class="booking-btn booking-btn-secondary" id="edit-add-passenger">
+                        + Add Passenger
+                    </button>
+                </div>
+                <div id="edit-passengers-container" class="edit-passengers-list"></div>
+            </div>
+
+            <p class="bookings-error" id="edit-booking-error" hidden></p>
+
+            <div class="booking-edit-actions">
+                <button type="submit" class="booking-btn booking-btn-primary" id="edit-booking-save">
+                    Save Changes
+                </button>
+            </div>
+        </form>
+    </section>
+
     <div class="bookings-grid" id="bookings-list"></div>
+
     <template id="booking-card-template">
         <article class="booking-card">
             <div class="booking-card-header">
@@ -49,10 +105,29 @@
 
             <div class="booking-card-footer">
                 <a class="booking-confirm-link" data-field="confirmationLink">View Confirmation</a>
+                <div class="booking-card-actions">
+                    <button type="button" class="booking-btn booking-btn-secondary" data-action="edit">
+                        Edit
+                    </button>
+                    <button type="button" class="booking-btn booking-btn-danger" data-action="delete">
+                        Delete
+                    </button>
+                </div>
             </div>
         </article>
     </template>
-    
+
+    <template id="edit-passenger-row-template">
+        <div class="edit-passenger-row">
+            <input type="text" data-passenger-field="firstName" placeholder="First Name" required>
+            <input type="text" data-passenger-field="lastName" placeholder="Last Name" required>
+            <input type="email" data-passenger-field="email" placeholder="Email" required>
+            <input type="text" data-passenger-field="phone" placeholder="Phone" required>
+            <button type="button" class="booking-btn booking-btn-danger" data-action="remove-passenger">
+                Remove
+            </button>
+        </div>
+    </template>
 </section>
 
 <%- include('./partials/footer') %>

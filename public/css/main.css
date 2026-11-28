@@ -17,3 +17,140 @@
 
 @import 'layout/all-layouts.css' layer(layout);
 @import 'auth.css';
+
+/* Feature Set 4: Protected Booking Admin Actions & Edit Form */
+.bookings-state[hidden],
+.booking-edit-panel[hidden],
+.bookings-error[hidden] {
+    display: none;
+}
+
+.admin-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.bookings-feedback {
+    background-color: #e6f4ea;
+    border: 1px solid #81c995;
+    color: #137333;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.booking-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.booking-card-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.booking-btn {
+    border: none;
+    border-radius: 6px;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+}
+
+.booking-btn:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+.booking-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.booking-btn-primary {
+    background-color: #1d4ed8;
+    color: #ffffff;
+}
+
+.booking-btn-secondary {
+    background-color: #e2e8f0;
+    color: #1e293b;
+}
+
+.booking-btn-danger {
+    background-color: #dc2626;
+    color: #ffffff;
+}
+
+.booking-edit-panel {
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.booking-edit-header,
+.booking-edit-passengers-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.booking-edit-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.booking-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-weight: 600;
+}
+
+.booking-field input,
+.booking-field select,
+.edit-passenger-row input {
+    padding: 0.5rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.edit-passengers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-bottom: 1rem;
+}
+
+.edit-passenger-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(120px, 1fr)) auto;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.booking-edit-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    .edit-passenger-row {
+        grid-template-columns: 1fr;
+    }
+}

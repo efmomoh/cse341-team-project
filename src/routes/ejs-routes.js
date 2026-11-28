@@ -34,7 +34,7 @@ router.post('/trips/book', processBookingRequest);
 router.get('/trips/confirmation/:confirmationId', confirmationPage);
 
 // Bookings Admin page (hydrated client-side via /api/bookings)
-router.get('/bookings-admin', bookingsAdminPage);
+router.get('/bookings-admin', requirePageLogin, bookingsAdminPage);
 
 // Trips listing and details pages
 router.get('/trips', renderTripsListPage);
