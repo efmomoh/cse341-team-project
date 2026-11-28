@@ -1,0 +1,45 @@
+<!--Provides the administrator-only landing page-->
+<%- include('../partials/header') %>
+
+    <main class="admin-page">
+
+        <section class="admin-card">
+
+            <div class="admin-heading">
+
+                <h1>Admin Dashboard</h1>
+
+                <p>
+                    Welcome to the Kizuna Rail administration area.
+                </p>
+
+            </div>
+
+            <div class="admin-welcome">
+
+                <h2>
+                    Welcome, <%= user.name %>
+                </h2>
+
+                <p>
+                    You are signed in with administrator privileges.
+                </p>
+
+                <p> Account:
+                    <strong>
+                        <%= user.email %>
+                    </strong>
+                </p>
+
+            </div>
+
+            <div class="admin-actions">
+                <a href="/bookings-admin" class="auth-button">Manage Bookings</a>
+                <a href="/account" class="auth-button">Return to My Account</a>
+            </div>
+
+        </section>
+
+    </main>
+
+    <%- include('../partials/footer') %>

@@ -1,0 +1,71 @@
+<!--Displays authenticated account information and conditionally shows the admin dashboard link.-->
+<%- include('../partials/header') %>
+
+    <main class="account-page">
+
+        <section class="account-card">
+
+            <div class="account-heading">
+
+                <h1>My Account</h1>
+
+                <p>
+                    Welcome,
+                    <strong>
+                        <%= user.name %>
+                    </strong>.
+                </p>
+
+            </div>
+
+            <h2>Account Information</h2>
+
+            <dl class="account-details">
+
+                <div>
+                    <dt>Full Name</dt>
+                    <dd>
+                        <%= user.name %>
+                    </dd>
+                </div>
+
+                <div>
+                    <dt>Username</dt>
+                    <dd>
+                        <%= user.username %>
+                    </dd>
+                </div>
+
+                <div>
+                    <dt>Email Address</dt>
+                    <dd>
+                        <%= user.email %>
+                    </dd>
+                </div>
+
+                <div>
+                    <dt>Account Role</dt>
+                    <dd>
+                        <%= user.role %>
+                    </dd>
+                </div>
+
+            </dl>
+
+            <% if (user.role==='admin' ) { %>
+
+                <a href="/admin/dashboard" class="auth-button"> Open Admin Dashboard </a>
+
+                <% } %>
+
+                    <form action="/api/auth/logout" method="POST">
+
+                        <button type="submit" class="logout-button"> Log Out </button>
+
+                    </form>
+
+        </section>
+
+    </main>
+
+    <%- include('../partials/footer') %>

@@ -1,7 +1,21 @@
 import { Router } from 'express';
-import { getAllBookings, getBookingById } from '../controllers/bookings.js';
+import {
+    register,
+    login,
+    logout
+} from '../controllers/auth.js';
+import {
+  deleteBooking,
+  getAllBookings,
+  getBookingById,
+  updateBooking,
+} from '../controllers/bookings.js';
 import { scheduleHandler } from '../controllers/schedules.js';
 import { getAllTrips, getTripById } from '../controllers/trips.js';
+import {
+    requireApiLogin,
+    requireApiRole
+} from '../middleware/auth.js';
 
 const router = Router();
 
@@ -87,73 +101,19 @@ router.get('/api/trips/:id', getTripById);
  * @swagger
  * /api/bookings:
  *   get:
- *     summary: Retrieve all bookings
- *     description: Returns a list of all scenic railway bookings sorted by creation date (newest first).
+ *     summary: Retrieve bookings for the authenticated user
+ *     description: Returns all bookings for admin users, or bookings where the signed-in user's email matches a passenger.
  *     tags:
  *       - Bookings
  *     responses:
  *       200:
- *         description: A JSON array of booking objects
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   _id:
- *                     type: string
- *                     example: 664f1c2e9a1b2c3d4e5f6a7b
- *                   id:
- *                     type: string
- *                     example: KIZ-123456
- *                   scheduleId:
- *                     type: number
- *                     example: 1
- *                   tripId:
- *                     type: string
- *                     example: alpine-panorama
- *                   ticketClass:
- *                     type: string
- *                     example: standard
- *                   selectedDay:
- *                     type: string
- *                     example: monday
- *                   passengers:
- *                     type: array
- *                     items:
- *                       type: object
- *                       properties:
- *                         firstName:
- *                           type: string
- *                           example: Sakura
- *                         lastName:
- *                           type: string
- *                           example: Tanaka
- *                         email:
- *                           type: string
- *                           example: sakura.tanaka@example.com
- *                         phone:
- *                           type: string
- *                           example: "+81 120-555-1234"
- *                   createdAt:
- *                     type: string
- *                     format: date-time
- *                   updatedAt:
- *                     type: string
- *                     format: date-time
+ *         description: A JSON array of authorized booking objects
+ *       401:
+ *         description: Authentication required
  *       500:
  *         description: Server error while fetching bookings
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
- *                   example: Failed to fetch bookings
  */
-router.get('/api/bookings', getAllBookings);
+router.get('/api/bookings', requireApiLogin, getAllBookings);
 
 /**
  * @swagger
@@ -172,59 +132,104 @@ router.get('/api/bookings', getAllBookings);
  *     responses:
  *       200:
  *         description: Booking found and returned as JSON
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 id:
- *                   type: string
- *                 scheduleId:
- *                   type: number
- *                 tripId:
- *                   type: string
- *                 ticketClass:
- *                   type: string
- *                 selectedDay:
- *                   type: string
- *                 passengers:
- *                   type: array
- *                   items:
- *                     type: object
- *                     properties:
- *                       firstName:
- *                         type: string
- *                       lastName:
- *                         type: string
- *                       email:
- *                         type: string
- *                       phone:
- *                         type: string
- *                 createdAt:
- *                   type: string
- *                   format: date-time
- *                 updatedAt:
- *                   type: string
- *                   format: date-time
+ *       401:
+ *         description: Authentication required
+ *       403:
+ *         description: Forbidden - not admin or a passenger on this booking
  *       404:
  *         description: Booking not found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
  *       500:
  *         description: Server error while fetching the booking
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
+ *   put:
+ *     summary: Update a booking by its confirmation ID
+ *     description: Admins can update any booking; standard users can update bookings where their email matches a passenger.
+ *     tags:
+ *       - Bookings
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The unique booking confirmation ID
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               ticketClass:
+ *                 type: string
+ *                 example: standard
+ *               selectedDay:
+ *                 type: string
+ *                 example: friday
+ *               passengers:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     firstName:
+ *                       type: string
+ *                     lastName:
+ *                       type: string
+ *                     email:
+ *                       type: string
+ *                     phone:
+ *                       type: string
+ *     responses:
+ *       200:
+ *         description: Booking updated successfully
+ *       400:
+ *         description: Invalid booking update payload
+ *       401:
+ *         description: Authentication required
+ *       403:
+ *         description: Forbidden - not admin or a passenger on this booking
+ *       404:
+ *         description: Booking not found
+ *       500:
+ *         description: Server error while updating the booking
+ *   delete:
+ *     summary: Delete a booking by its confirmation ID
+ *     description: Admins can delete any booking; standard users can delete bookings where their email matches a passenger.
+ *     tags:
+ *       - Bookings
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: The unique booking confirmation ID
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Booking deleted successfully
+ *       401:
+ *         description: Authentication required
+ *       403:
+ *         description: Forbidden - not admin or a passenger on this booking
+ *       404:
+ *         description: Booking not found
+ *       500:
+ *         description: Server error while deleting the booking
  */
-router.get('/api/bookings/:id', getBookingById);
+router.get('/api/bookings/:id', requireApiLogin, getBookingById);
+router.put('/api/bookings/:id', requireApiLogin, updateBooking);
+router.delete('/api/bookings/:id', requireApiLogin, deleteBooking);
+
+// Authentication API routes
+router.post('/api/auth/register', register);
+router.post('/api/auth/login', login);
+router.post('/api/auth/logout', requireApiLogin, logout);
+
+// Example protected admin API endpoint
+router.get('/api/auth/admin', requireApiRole('admin'), (req, res) => {
+    return res.status(200).json({
+        message: 'Administrator access granted.',
+        user: req.user
+    });
+});
 
 export default router;
